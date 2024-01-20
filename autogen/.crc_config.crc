@@ -1,0 +1,23 @@
+#CRC Codes for initially generated config files -- do not modify!
+FreeRTOSConfig.h=434012435
+app_assert_config.h=1717687323
+app_button_press_config.h=-2067899385
+dmadrv_config.h=281221886
+emlib_core_debug_config.h=171843933
+sl_board_control_config.h=1942454455
+sl_debug_swo_config.h=-1109120123
+sl_device_init_dcdc_config.h=-514576323
+sl_device_init_emu_config.h=1238190016
+sl_device_init_hfxo_config.h=-1025858485
+sl_hfxo_manager_config.h=511487363
+sl_iostream_usart_vcom_config.h=-1151724318
+sl_memory_config.h=-995392215
+sl_power_manager_config.h=-1985446573
+sl_simple_button_config.h=-1269689451
+sl_simple_button_instance0_config.h=-1067892035
+sl_simple_com_config.h=-1304646269
+sl_simple_com_freertos_config.h=-1765814700
+sl_simple_led_led0_config.h=1548261695
+sl_sleeptimer_config.h=847044378
+sl_uartdrv_usart_inst0_config.h=1778058222
+uartdrv_config.h=-1381003705
