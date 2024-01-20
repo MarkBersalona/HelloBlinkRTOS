@@ -1,7 +1,7 @@
 # HelloBlinkRTOS
 
 ## Executive Summary
-This project was developed <b>to become familiar with the Silicon Labs Simplicity Studio 5</b> and its utility in developing embedded software for SiliconLabs microcontrollers. The intent was to compare it to the STMicroelectronics STM32CubeIDE and its libraries and documentation for STM32 microprocessors, used in Temperature Display, 400 Cellular/Sentry, Temperature Sensor Display and future STM32-based Sentinel products.
+This project was developed **to become familiar with the Silicon Labs Simplicity Studio 5 IDE** and its utility in developing embedded software for SiliconLabs microcontrollers. The intent was to compare it to the STMicroelectronics STM32CubeIDE and its libraries and documentation for STM32 microprocessors, used in Temperature Display, 400 Cellular/Sentry, Temperature Sensor Display and future STM32-based Sentinel products.
 
 Target device at the moment is a SparkFun MGM240P Thing Plus board. Its processor is the SiLabs MGM240P Multi-Protocol Wireless Module.
 
@@ -23,7 +23,7 @@ Next, the example iostream_usart_baremetal project involved input and output ove
 <img src="20240120 SparkFun ThingPlusMatter HelloBlinkRTOS.jpg" alt="Sentry Simulator hooked up" />
 
 
-Much like the Sentry Simulator project for the NXP IDE and evaluation board, the first project I tried to build from scratch in SimplicityStudio should have included hooks for a serial port and an LED, but somehow did not. Again, I wound up **copying and pasting from the aforementioned SimmplicityStudio example projects**.
+Much like the Sentry Simulator project for the NXP IDE and evaluation board, the first project I tried to build from scratch in SimplicityStudio should have included hooks for a serial port and an LED, but somehow did not. Again, I wound up **copying and pasting from the aforementioned Simplicity Studio example projects**.
 
 
 ### Initial impressions
@@ -40,7 +40,7 @@ Much like the Sentry Simulator project for the NXP IDE and evaluation board, the
 
 ## Version history
 ### 2024.01.20 v0.0.1
-First working project, derived by copying and pasting the example projects 'blink_kernel_freertos' and 'iostream_usart_baremetal' into a newly-created project. Although I tried specifying the status LED and serial port when creating the new project, ultimately I needed to view the project files of the examples to figure out what software components to include. Still, needed to copy and paste the #include files, so why bother with specifying software components?
+First working project, derived by copying and pasting the example projects 'blink_kernel_freertos' and 'iostream_usart_baremetal' into a newly-created project. Although I tried specifying the status LED and serial port when creating the new project, ultimately I needed to view the project files of the examples to figure out what software components to include. Still, needed to copy and paste the #include files, so *why bother with specifying software components?*
 
 I copied and adapted the PrintStartupBanner() routine and gconfig.h file from the 400 Cellular project, as well as the LOG() macro to print debug output out the serial port.
 
