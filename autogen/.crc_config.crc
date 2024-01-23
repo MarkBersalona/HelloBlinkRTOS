@@ -11,6 +11,7 @@ sl_device_init_emu_config.h=1238190016
 sl_device_init_hfxo_config.h=-1025858485
 sl_hfxo_manager_config.h=511487363
 sl_iostream_usart_vcom_config.h=-1151724318
+sl_legacy_hal_wdog_config.h=1678745664
 sl_memory_config.h=-995392215
 sl_power_manager_config.h=-1985446573
 sl_simple_button_config.h=-1269689451

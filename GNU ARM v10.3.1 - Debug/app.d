@@ -92,7 +92,11 @@ app.o: ../app.c \
  /home/mark/SiLabsProjects/HelloBlinkRTOS/autogen/sl_simple_led_instances.h \
  /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/task.h \
  /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/list.h \
- ../gconfig.h
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/semphr.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/queue.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/task.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/queue.h \
+ ../gconfig.h ../app.h
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/common/toolchain/inc/sl_gcc_preinclude.h:
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_chip.h:
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/Device/SiliconLabs/MGM24/Include/em_device.h:
@@ -186,4 +190,9 @@ app.o: ../app.c \
 /home/mark/SiLabsProjects/HelloBlinkRTOS/autogen/sl_simple_led_instances.h:
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/task.h:
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/list.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/semphr.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/queue.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/task.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/queue.h:
 ../gconfig.h:
+../app.h:

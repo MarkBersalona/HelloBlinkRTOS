@@ -24,56 +24,52 @@
 #include "sl_simple_led_instances.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
+#include "queue.h"
 #include "gconfig.h"
+#include "app.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
  ******************************************************************************/
-
-#ifndef BUFSIZE
-#define BUFSIZE    80
-#endif
-
-#define LOG(...) {\
-  sprintf(gucDiagnosticOutput, __VA_ARGS__);\
-  sl_iostream_write(sl_iostream_vcom_handle, gucDiagnosticOutput, strlen(gucDiagnosticOutput));\
-}
-
-#ifndef LED_INSTANCE
-#define LED_INSTANCE               sl_led_led0
-#endif
-
-#ifndef TOOGLE_DELAY_MS
-#define TOOGLE_DELAY_MS            1000
-//// TEST MAB 2024.01.20 #define TOOGLE_DELAY_MS            200
-#endif
-
-#ifndef BLINK_TASK_STACK_SIZE
-#define BLINK_TASK_STACK_SIZE      configMINIMAL_STACK_SIZE
-#endif
-
-#ifndef BLINK_TASK_PRIO
-#define BLINK_TASK_PRIO            20
-#endif
-
-#ifndef EXAMPLE_USE_STATIC_ALLOCATION
-#define EXAMPLE_USE_STATIC_ALLOCATION      1
-#endif
 
 
 /*******************************************************************************
  ***************************  LOCAL VARIABLES   ********************************
  ******************************************************************************/
 
-/* Input buffer */
-static char buffer[BUFSIZE];
+// Diagnostic output buffer
 static char gucDiagnosticOutput[1000];
+
+//
+// FreeRTOS mutexes
+//
+StaticSemaphore_t xDiagnosticMutexBuffer;
+SemaphoreHandle_t xDiagnosticMutex;
+
+//
+// FreeRTOS queues
+//
+StaticQueue_t xMainQueueBuffer;
+uint8_t gucMainQueueStorage[MAIN_QUEUE_COUNT * sizeof(uint8_t)];
+QueueHandle_t xMainQueueHandle;
+
+//
+// FreeRTOS tasks
+//
+StaticTask_t xMainTaskBuffer;
+StackType_t  xMainStack[MAIN_TASK_STACK_SIZE];
+
 
 /*******************************************************************************
  *********************   LOCAL FUNCTION PROTOTYPES   ***************************
  ******************************************************************************/
 
-static void blink_task(void *arg);
+//
+// FreeRTOS tasks
+//
+static void MainTask(void *arg);
+
 void PrintStartupBanner(void);
 
 
@@ -105,44 +101,63 @@ void app_init(void)
   //LOG("%s: Hello world, via LOG\r\n\r\n", __FUNCTION__);
   PrintStartupBanner();
 
-  // Kick off blink task
-  blink_init();
+  // Create RTOS objects and tasks
+  RTOS_init();
 }
 
 /***************************************************************************//**
- * Initialize blink example.
+ * Initialize RTOS items
  ******************************************************************************/
-void blink_init(void)
+void RTOS_init(void)
 {
-  TaskHandle_t xHandle = NULL;
+  TaskHandle_t xMainHandle = NULL;
 
 #if (EXAMPLE_USE_STATIC_ALLOCATION == 1)
 
-  static StaticTask_t xTaskBuffer;
-  static StackType_t  xStack[BLINK_TASK_STACK_SIZE];
 
-  // Create Blink Task without using any dynamic memory allocation
-  xHandle = xTaskCreateStatic(blink_task,
-                              "blink task",
-                              BLINK_TASK_STACK_SIZE,
-                              ( void * ) NULL,
-                              tskIDLE_PRIORITY + 1,
-                              xStack,
-                              &xTaskBuffer);
+  /////////////////////////////
+  //
+  // Create mutexes
+  //
+  /////////////////////////////
+  //xDiagnosticMutex = xSemaphoreCreateMutex();
+  xDiagnosticMutex = xSemaphoreCreateMutexStatic(&xDiagnosticMutexBuffer);
+
+  /////////////////////////////
+  //
+  // Create queues
+  //
+  /////////////////////////////
+  xMainQueueHandle = xQueueCreateStatic(MAIN_QUEUE_COUNT, sizeof(uint8_t), gucMainQueueStorage, &xMainQueueBuffer);
+
+  /////////////////////////////
+  //
+  // Create tasks
+  //
+  /////////////////////////////
+
+  // Create Main Task without using any dynamic memory allocation
+  xMainHandle = xTaskCreateStatic(MainTask,
+                                  "Main task",
+                                  MAIN_TASK_STACK_SIZE,
+                                  ( void * ) NULL,
+                                  osPriorityNormal,
+                                  xMainStack,
+                                  &xMainTaskBuffer);
 
   // Since puxStackBuffer and pxTaskBuffer parameters are not NULL,
   // it is impossible for xHandle to be null. This check is for
   // rigorous example demonstration.
-  EFM_ASSERT(xHandle != NULL);
+  EFM_ASSERT(xMainHandle != NULL);
 
 #else
 
   BaseType_t xReturned = pdFAIL;
 
-  // Create Blink Task using dynamic memory allocation
-  xReturned = xTaskCreate(blink_task,
-                          "blink task",
-                          BLINK_TASK_STACK_SIZE,
+  // Create Main Task using dynamic memory allocation
+  xReturned = xTaskCreate(MainTask,
+                          "Main task",
+                          MAIN_TASK_STACK_SIZE,
                           ( void * ) NULL,
                           tskIDLE_PRIORITY + 1,
                           &xHandle);
@@ -154,25 +169,7 @@ void blink_init(void)
 #endif
 }
 
-/*******************************************************************************
- * Blink task.
- ******************************************************************************/
-static void blink_task(void *arg)
-{
-  (void)&arg;
 
-  //Use the provided calculation macro to convert milliseconds to OS ticks
-  const TickType_t xDelay = pdMS_TO_TICKS(TOOGLE_DELAY_MS);;
-
-  while (1) {
-    //Wait for specified delay
-    vTaskDelay(xDelay);
-
-    // Toggle led
-    sl_led_toggle(&LED_INSTANCE);
-    LOG("%s: LED toggled...\r\n", __FUNCTION__);
-  }
-}
 /***************************************************************************//**
  * App ticking function.
  ******************************************************************************/
@@ -181,9 +178,8 @@ void app_process_action(void)
 }
 
 
-
 /***************************************************************************//**
- * Print startup banner
+ * Print startup banner to Diagnostic output
  ******************************************************************************/
 void PrintStartupBanner(void)
 {
@@ -196,3 +192,49 @@ void PrintStartupBanner(void)
   LOG("=================================<=>=================================\r\n");
 }
 // end PrintStartupBanner
+
+
+/*******************************************************************************
+ * Main task
+ ******************************************************************************/
+static void MainTask(void *arg)
+{
+  (void)&arg;
+  uint8_t lucBlinkCounter=0;
+  sl_led_state_t ltLEDState;
+
+  //Use the provided calculation macro to convert milliseconds to OS ticks
+  //const TickType_t xDelay = pdMS_TO_TICKS(MAIN_TASK_PERIOD_MS);;
+
+  while (1)
+  {
+    ///////////////
+    //
+    // Toggle led
+    //
+    ///////////////
+    ++lucBlinkCounter;
+    if (lucBlinkCounter >= 4)
+    {
+      sl_led_turn_on(&LED_INSTANCE);
+      ltLEDState = sl_led_get_state(&LED_INSTANCE);
+      LOG("%s: lucBlinkCounter=%d \t LED is ON  \t ltLEDState=%d\r\n", __FUNCTION__, lucBlinkCounter, ltLEDState);
+      lucBlinkCounter = 0;
+    }
+    else
+    {
+      sl_led_turn_off(&LED_INSTANCE);
+      ltLEDState = sl_led_get_state(&LED_INSTANCE);
+      LOG("%s: lucBlinkCounter=%d \t LED is OFF \t ltLEDState=%d\r\n", __FUNCTION__, lucBlinkCounter, ltLEDState);
+    }
+
+    ////////////////
+    //
+    // Task delay
+    //
+    ////////////////
+    //// TEST MAB 2024.01.22 vTaskDelay(xDelay);
+    osDelay(MAIN_TASK_PERIOD_MS);
+  }
+}
+

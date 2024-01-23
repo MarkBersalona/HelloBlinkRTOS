@@ -88,10 +88,10 @@
 #elif PRODUCT_TYPE == SENSAPHONE_SPARKFUN
 #define VERSION_A                 "0"
 #define VERSION_B                 "0"
-#define VERSION_C                 "1"
+#define VERSION_C                 "2"
 #define VERSION_D                 "" __DATE__ " " __TIME__
-#define VERSION_ENCODED           0x00000100
-#define VERSION_DATE             "2024.01.20"
+#define VERSION_ENCODED           0x00000200
+#define VERSION_DATE             "2024.01.22"
 #else
 #define VERSION_A		  "1"
 #define VERSION_B		  "6"
@@ -553,7 +553,7 @@
   #endif
 
 #elif !defined(BOOTLOADER)
-# warning No Tasks Defined for this Target!
+//# warning No Tasks Defined for this Target!
 #endif
 
 
@@ -925,7 +925,7 @@
  #define BUILD_CALCULATIONS           false
 
 #elif !defined(BOOTLOADER)
-# warning No Configuration Defined for this Target!
+//# warning No Configuration Defined for this Target!
 #endif
 
 #define FEATURE_BITMAP_1         (BUILD_LOCAL_ALARM_DELIVERY  == true ? 0x00000001 : 0x00000000)
@@ -2260,7 +2260,7 @@
   // through the STM32CubeMX tool of the STM32CubeIDE.
         
 #elif !defined(BOOTLOADER)
-# warning Unsupported hardware configuration!
+//# warning Unsupported hardware configuration!
 # define DEFAULT_PANPAR   PANPAR
 # define DEFAULT_DDRAN    DDRAN
 # define DEFAULT_PORTAN   PORTAN
@@ -2543,7 +2543,7 @@ union integer_size_checks{
 // 400 Cellular uses an STM32 processor
 # define   LOW_POWER_FIXED              (330)     //  3.30v - Low Power Level
 #elif !defined(BOOTLOADER)
-# warning No Power Settings Defined for this Target
+//# warning No Power Settings Defined for this Target
 #endif
 #if PRODUCT_TYPE != SENSAPHONE_400_CELLULAR
 # define   MAX_BATTERY_CHARGE_ON_AD		(2172)		//  7.00v

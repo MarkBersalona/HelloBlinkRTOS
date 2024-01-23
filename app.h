@@ -18,6 +18,26 @@
 #ifndef APP_H
 #define APP_H
 
+/*******************************************************************************
+ *******************************   DEFINES   ***********************************
+ ******************************************************************************/
+
+#define LOG(...) {\
+  sprintf(gucDiagnosticOutput, __VA_ARGS__);\
+  sl_iostream_write(sl_iostream_vcom_handle, gucDiagnosticOutput, strlen(gucDiagnosticOutput));\
+}
+
+#define LED_INSTANCE               sl_led_led0
+
+// For FreeRTOS items
+#define MAIN_TASK_STACK_SIZE      configMINIMAL_STACK_SIZE
+#define MAIN_TASK_PRIO            20
+#define MAIN_QUEUE_COUNT          (256)
+#define EXAMPLE_USE_STATIC_ALLOCATION      1
+
+// Task periods
+#define MAIN_TASK_PERIOD_MS (1000)
+
 /***************************************************************************//**
  * Initialize application.
  ******************************************************************************/
@@ -29,8 +49,8 @@ void app_init(void);
 void app_process_action(void);
 
 /***************************************************************************//**
- * Initialize blink example
+ * Initialize RTOS items
  ******************************************************************************/
-void blink_init(void);
+void RTOS_init(void);
 
 #endif  // APP_H

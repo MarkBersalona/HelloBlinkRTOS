@@ -1,0 +1,24 @@
+
+=================================<=>=================================
+                      SparkFun Thing Plus Matter                     
+                           HelloBlinkRTOS                            
+                               v0.0.2 
+                             2024.01.22   
+=================================<=>=================================
+MainTask: lucBlinkCounter=1 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=2 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=3 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=4 	 LED is ON  	 ltLEDState=1
+MainTask: lucBlinkCounter=1 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=2 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=3 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=4 	 LED is ON  	 ltLEDState=1
+MainTask: lucBlinkCounter=1 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=2 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=3 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=4 	 LED is ON  	 ltLEDState=1
+MainTask: lucBlinkCounter=1 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=2 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=3 	 LED is OFF 	 ltLEDState=0
+MainTask: lucBlinkCounter=4 	 LED is ON  	 ltLEDState=1
+
