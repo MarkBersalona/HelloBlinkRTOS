@@ -23,8 +23,10 @@
  ******************************************************************************/
 
 #define LOG(...) {\
+  xSemaphoreTake(xDiagnosticMutex, portMAX_DELAY);\
   sprintf(gucDiagnosticOutput, __VA_ARGS__);\
   sl_iostream_write(sl_iostream_vcom_handle, gucDiagnosticOutput, strlen(gucDiagnosticOutput));\
+  xSemaphoreGive(xDiagnosticMutex);\
 }
 
 #define LED_INSTANCE               sl_led_led0
@@ -33,10 +35,32 @@
 #define MAIN_TASK_STACK_SIZE      configMINIMAL_STACK_SIZE
 #define MAIN_TASK_PRIO            20
 #define MAIN_QUEUE_COUNT          (256)
+#define INPUT_TASK_STACK_SIZE     configMINIMAL_STACK_SIZE
+#define INPUT_TASK_PRIO           20
+#define INPUT_QUEUE_COUNT         (256)
+#define OUTPUT_TASK_STACK_SIZE    configMINIMAL_STACK_SIZE
+#define OUTPUT_TASK_PRIO          20
+#define OUTPUT_QUEUE_COUNT        (256)
 #define EXAMPLE_USE_STATIC_ALLOCATION      1
 
 // Task periods
-#define MAIN_TASK_PERIOD_MS (1000)
+#define MAIN_TASK_PERIOD_MS   (100)
+#define INPUT_TASK_PERIOD_MS  (100)
+#define OUTPUT_TASK_PERIOD_MS (100)
+
+//
+// Intertask message IDs
+//
+typedef enum Intertask_messages
+{
+  msgid_NOP = 0,
+
+  // for HelloBlinkRTOS
+  msgid_MAIN_INPUT_TEST,  // no payload
+  msgid_MAIN_OUTPUT_TEST,  // no payload
+  msgid_MAIN_OUTPUT_LED_ON,  // no payload
+  msgid_MAIN_OUTPUT_LED_OFF,  // no payload
+} Intertask_message_ID;
 
 /***************************************************************************//**
  * Initialize application.

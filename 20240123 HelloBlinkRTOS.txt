@@ -1,0 +1,33 @@
+=================================<=>=================================
+                      SparkFun Thing Plus Matter
+                           HelloBlinkRTOS
+                               v0.1.0
+                             2024.01.23
+=================================<=>=================================
+MainTask: Initializing...
+InputTask: Initializing...
+OutputTask: Initializing...
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+InputTask: Received test message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+O

@@ -39,7 +39,6 @@ Much like the Sentry Simulator project for the NXP IDE and evaluation board, the
 - Yet another configuration item that must be configured completely manually, instead of being given a simple choice and being initialized correctly by the rebuilt application, like how STM32CubeIDE does it. Yeah, it's my job as an embedded software engineer to make it happen, but it's just another possible way to misconfigure firmware.
 
 ### TODO things to add
-- control the LED from Output task, separate from Main task but commanded by Main task
 - watchdog timer/timeout
 - accept simple Diagnostic commands from the debug serial port
 - recognize/debounce button press via TBD I/O pin through Input task, i.e. simulate Reset-To-Defaults button (assuming a free I/O pin is available; wire up a switch to it)
@@ -47,7 +46,57 @@ Much like the Sentry Simulator project for the NXP IDE and evaluation board, the
 
 ## Version history
 
-### 2024.01.xx v0.0.2
+### 2024.01.23 v0.1.0
+
+<img src="HelloBlinkRTOS SW block diagram.png" alt="HelloBlinkRTOS SW block diagram" />
+
+
+- More FreeRTOS items
+  - Input and Output tasks as well as Main task
+  - Each task has a message queue
+  - Diagnostic serial port output governed by a Diagnostic mutex
+- Use Diagnostic mutex in LOG() macro
+- Move call to PrintStartupBanner() to MainTask(): can't use an RTOS item until it's been instantiated in RTOS_init()
+- LED governed by Output task, commanded by Main task
+
+#### Demo debug output
+```
+=================================<=>=================================
+                      SparkFun Thing Plus Matter
+                           HelloBlinkRTOS
+                               v0.1.0
+                             2024.01.23
+=================================<=>=================================
+MainTask: Initializing...
+InputTask: Initializing...
+OutputTask: Initializing...
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+InputTask: Received test message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+```
+
+
+### 2024.01.22 v0.0.2
 - Instead of using the LED toggle routine, call the routines to turn LED on and to turn LED off; also investigate the values associated with LED state.
 - Call osDelay() instead of vTaskDelay(), to avoid the need to convert msec to ticks.
 - Rename blink_task() as MainTask(); rename blink_init() as RTOS_init() - in preparation for more RTOS items soon.
