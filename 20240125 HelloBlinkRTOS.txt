@@ -1,0 +1,44 @@
+
+
+
+=================================<=>=================================
+                      SparkFun Thing Plus Matter
+                           HelloBlinkRTOS
+                               v0.1.1
+                             2024.01.25
+=================================<=>=================================
+MainTask: Initializing...
+InputTask: Initializing...
+OutputTask: Initializing...
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+MainTask: *** WARNING *** Waiting here in tight loop for watchdog reset...
+InputTask: No messages
+OutputTask: No messages
+
+
+
+=================================<=>=================================
+                      SparkFun Thing Plus Matter
+                           HelloBlinkRTOS
+                               v0.1.1
+                             2024.01.25
+=================================<=>=================================
+MainTask: Initializing...
+InputTask: Initializing...
+OutputTask: Initializing...
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main

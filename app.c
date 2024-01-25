@@ -28,6 +28,8 @@
 #include "queue.h"
 #include "gconfig.h"
 #include "app.h"
+#include "em_cmu.h"
+#include "em_wdog.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
@@ -89,6 +91,7 @@ static void MainTask(void *arg);
 static void OutputTask(void *arg);
 
 void PrintStartupBanner(void);
+void Watchdog_init(void);
 
 
 /***************************************************************************//**
@@ -120,7 +123,27 @@ void app_init(void)
 
   // Create RTOS objects and tasks
   RTOS_init();
+
+  // Initialize watchdog
+  Watchdog_init();
+
 }
+// end app_init
+
+/***************************************************************************//**
+ * Print startup banner to Diagnostic output
+ ******************************************************************************/
+void PrintStartupBanner(void)
+{
+  LOG("\r\n\r\n\r\n");
+  LOG("=================================<=>=================================\r\n");
+  LOG("                      SparkFun Thing Plus Matter                     \r\n");
+  LOG("                           HelloBlinkRTOS                            \r\n");
+  LOG("                               v%s.%s.%s \r\n", VERSION_A,VERSION_B,VERSION_C);
+  LOG("                             %s   \r\n", VERSION_DATE);
+  LOG("=================================<=>=================================\r\n");
+}
+// end PrintStartupBanner
 
 /***************************************************************************//**
  * Initialize RTOS items
@@ -204,30 +227,35 @@ void RTOS_init(void)
 
 #endif
 }
-
-
-/***************************************************************************//**
- * App ticking function.
- ******************************************************************************/
-void app_process_action(void)
-{
-}
-
+// end RTOS_init
 
 /***************************************************************************//**
- * Print startup banner to Diagnostic output
+ * Initialize watchdog
  ******************************************************************************/
-void PrintStartupBanner(void)
+void Watchdog_init(void)
 {
-  LOG("\r\n\r\n\r\n");
-  LOG("=================================<=>=================================\r\n");
-  LOG("                      SparkFun Thing Plus Matter                     \r\n");
-  LOG("                           HelloBlinkRTOS                            \r\n");
-  LOG("                               v%s.%s.%s \r\n", VERSION_A,VERSION_B,VERSION_C);
-  LOG("                             %s   \r\n", VERSION_DATE);
-  LOG("=================================<=>=================================\r\n");
+  //
+  // Copied from Silicon Labs GitHub repository, peripheral example for Series 2 wdog
+  // See https://github.com/SiliconLabs/peripheral_examples/tree/master/series2/wdog/wdog_led_toggle
+  // main.c (or main_xg27.c), initWDOG()
+  //
+
+  // Enable clock for the WDOG module; has no effect on xG21
+  CMU_ClockEnable(cmuClock_WDOG0, true);
+
+  // Watchdog Initialize settings
+  WDOG_Init_TypeDef wdogInit = WDOG_INIT_DEFAULT;
+  CMU_ClockSelectSet(cmuClock_WDOG0, cmuSelect_ULFRCO); /* ULFRCO as clock source */
+  wdogInit.debugRun = true;
+  wdogInit.em3Run = true;
+  //wdogInit.perSel = wdogPeriod_2k; // 2049 clock cycles of a 1kHz clock  ~2 seconds period
+  //wdogInit.perSel = wdogPeriod_32k; // 32k clock cycles of a 1kHz clock  ~30 seconds period
+  wdogInit.perSel = wdogPeriod_8k; // 8k clock cycles of a 1kHz clock  ~8 seconds period
+
+  // Initializing watchdog with chosen settings
+  WDOGn_Init(DEFAULT_WDOG, &wdogInit);
 }
-// end PrintStartupBanner
+// end Watchdog_init
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -321,6 +349,18 @@ static void MainTask(void *arg)
 
   while (1)
   {
+    //////////////////////////////////////////////
+    //
+    // Pet the watchdog
+    //
+    //////////////////////////////////////////////
+    WDOGn_Feed(DEFAULT_WDOG);
+
+    //////////////////////////////////////////////
+    //
+    // Do timing updates
+    //
+    //////////////////////////////////////////////
     lulElapsedTime_msec += MAIN_TASK_PERIOD_MS;
     if (lulElapsedTime_msec >= 4000000000) lulElapsedTime_msec = 0;
     lulElapsedTimeSinceLED_msec += MAIN_TASK_PERIOD_MS;
@@ -365,11 +405,25 @@ static void MainTask(void *arg)
 
     ///////////////
     //
+    // TEST: After a fixed amount of time, hang here, wait for watchdog reset
+    //
+    ///////////////
+    static uint32_t lulElapsedTime_To_Watchdog_msec;
+    lulElapsedTime_To_Watchdog_msec += MAIN_TASK_PERIOD_MS;
+    if (lulElapsedTime_To_Watchdog_msec >= 12000)
+    {
+      LOG("%s: *** WARNING *** Waiting here in tight loop for watchdog reset...\r\n", __FUNCTION__);
+      osDelay(2000);
+      for(;;){}
+    }
+
+    ///////////////
+    //
     // TEST: Send a message to another task
     //
     ///////////////
     static uint32_t lulElapsedTime_SendMessage_msec;
-    static uint8_t lucMessageCommand;
+    //static uint8_t lucMessageCommand;
     lulElapsedTime_SendMessage_msec += MAIN_TASK_PERIOD_MS;
     if (lulElapsedTime_SendMessage_msec >= 15000)
     {

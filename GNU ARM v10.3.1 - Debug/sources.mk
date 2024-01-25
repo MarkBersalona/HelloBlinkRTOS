@@ -35,6 +35,7 @@ gecko_sdk_4.3.2/platform/service/device_init/src \
 gecko_sdk_4.3.2/platform/service/iostream/src \
 gecko_sdk_4.3.2/platform/service/sleeptimer/src \
 gecko_sdk_4.3.2/platform/service/system/src \
+gecko_sdk_4.3.2/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/source \
 gecko_sdk_4.3.2/util/third_party/freertos/cmsis/Source \
 gecko_sdk_4.3.2/util/third_party/freertos/kernel \
 gecko_sdk_4.3.2/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure \

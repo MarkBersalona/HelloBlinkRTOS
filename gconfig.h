@@ -88,10 +88,10 @@
 #elif PRODUCT_TYPE == SENSAPHONE_SPARKFUN
 #define VERSION_A                 "0"
 #define VERSION_B                 "1"
-#define VERSION_C                 "0"
+#define VERSION_C                 "1"
 #define VERSION_D                 "" __DATE__ " " __TIME__
-#define VERSION_ENCODED           0x00010000
-#define VERSION_DATE             "2024.01.23"
+#define VERSION_ENCODED           0x00010100
+#define VERSION_DATE             "2024.01.25"
 #else
 #define VERSION_A		  "1"
 #define VERSION_B		  "6"

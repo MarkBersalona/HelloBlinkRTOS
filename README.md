@@ -31,7 +31,9 @@ Much like the Sentry Simulator project for the NXP IDE and evaluation board, the
 - Adding/modifying FreeRTOS items like tasks, queues and semaphores/mutexes is done by copying/pasting or otherwise manually typing into code; it requires more FreeRTOS expertise. In contrast, STM32CubeIDE offers graphical selectors and other GUI items; it requires less FreeRTOS expertise.
 - Although there is a main.c, **the code of HelloBlinkRTOS is in and will be in app.c**.
 
-**A tip**: In Simplicity Studio, in the project's file/directory tree, look in the *gecko_sdk_x.x.x* directory to find what software components and their supporting functions are available.
+**TIP**: In Simplicity Studio, in the project's file/directory tree, look in the *gecko_sdk_x.x.x* directory to find what software components and their supporting functions are available.
+
+**TIP**: There's a Silicon Labs GitHub repository full of peripheral examples. The Simplicity Studio examples seem to concentrate on the assorted wireless connectivity options, like Bluetooth or Zigbee; these peripheral examples are more mundane microcontroller examples like how to set up and use GPIO or a watchdog timer. See [https://github.com/SiliconLabs/peripheral_examples](https://github.com/SiliconLabs/peripheral_examples)
 
 **WARNING**: When instantiating FreeRTOS items (tasks, mutexes, queues, etc.) be sure to use the static (versus dynamic) version of the creating routines, so allocated memory will be static instead of dynamic.
 - For now with a small application, shouldn't run out of RAM in case dynamic memory is allocated
@@ -39,12 +41,70 @@ Much like the Sentry Simulator project for the NXP IDE and evaluation board, the
 - Yet another configuration item that must be configured completely manually, instead of being given a simple choice and being initialized correctly by the rebuilt application, like how STM32CubeIDE does it. Yeah, it's my job as an embedded software engineer to make it happen, but it's just another possible way to misconfigure firmware.
 
 ### TODO things to add
-- watchdog timer/timeout
 - accept simple Diagnostic commands from the debug serial port
 - recognize/debounce button press via TBD I/O pin through Input task, i.e. simulate Reset-To-Defaults button (assuming a free I/O pin is available; wire up a switch to it)
 - if a real-time clock is available, use it for at least elapsed times
 
 ## Version history
+
+### 2024.01.25 v0.1.1
+
+Searching the software components for 'watchdog', of the 4 examples given, only the third-party Amazon FreeRTOS > Common I/O > IoT Watchdog installed and compiled initially without any crazy errors. Still no hooks for initializing or using a watchdog, but at least it pulled in **em_wdog.c and .h files** in the Gecko directory tree.
+
+- gecko_sdk_4.3.2 > platform > em_lib
+
+Copied the example initWDG() contents into Watchdog_init() in HelloBlinkRTOS, modified it to 32k cycles for an approximate 30 second timeout, #included em_cmu.h and em_wdog.h. Lo and behold: reboots after 32 seconds! Specify 8k cycles: reboots after 8 seconds!
+
+In MainTask() loop, pet the watchdog with **WDOGn_Feed(DEFAULT_WDOG)**, and the watchdog reset is avoided.
+
+Then add test code in MainTask() to hang in a tight loop after 10 seconds.
+- Input and Output tasks are still able to run. After all, only Main task is hung.
+- But since Main task is hung and no longer petting the watchdog, the watchdog reset eventually triggers a reboot. Good!
+
+#### Demo debug output
+```
+=================================<=>=================================
+                      SparkFun Thing Plus Matter
+                           HelloBlinkRTOS
+                               v0.1.1
+                             2024.01.25
+=================================<=>=================================
+MainTask: Initializing...
+InputTask: Initializing...
+OutputTask: Initializing...
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED ON message from Main
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+MainTask: No messages{demo debug output}
+InputTask: No messages
+OutputTask: Received LED OFF message from Main
+MainTask: *** WARNING *** Waiting here in tight loop for watchdog reset...
+InputTask: No messages
+OutputTask: No messages
+
+
+
+=================================<=>=================================
+                      SparkFun Thing Plus Matter
+                           HelloBlinkRTOS
+                               v0.1.1
+                             2024.01.25
+=================================<=>=================================
+MainTask: Initializing...
+InputTask: Initializing...
+OutputTask: Initializing...
+OutputTask: Received LED OFF message from Main
+OutputTask: Received LED OFF message from Main
+```
 
 ### 2024.01.23 v0.1.0
 

@@ -227,6 +227,7 @@
           <file name="em_system.c" uri="studio:/sdk/platform/emlib/src/em_system.c"/>
           <file name="em_timer.c" uri="studio:/sdk/platform/emlib/src/em_timer.c"/>
           <file name="em_usart.c" uri="studio:/sdk/platform/emlib/src/em_usart.c"/>
+          <file name="em_wdog.c" uri="studio:/sdk/platform/emlib/src/em_wdog.c"/>
         </folder>
         <folder name="inc">
           <file name="em_burtc.h" uri="studio:/sdk/platform/emlib/inc/em_burtc.h"/>
@@ -254,6 +255,7 @@
           <file name="em_system_generic.h" uri="studio:/sdk/platform/emlib/inc/em_system_generic.h"/>
           <file name="em_timer.h" uri="studio:/sdk/platform/emlib/inc/em_timer.h"/>
           <file name="em_usart.h" uri="studio:/sdk/platform/emlib/inc/em_usart.h"/>
+          <file name="em_wdog.h" uri="studio:/sdk/platform/emlib/inc/em_wdog.h"/>
         </folder>
       </folder>
       <folder name="peripheral">
@@ -417,6 +419,39 @@
             <file name="timers.c" uri="studio:/sdk/util/third_party/freertos/kernel/timers.c"/>
           </folder>
         </folder>
+        <folder name="aws_iot_libs">
+          <folder name="vendors">
+            <folder name="siliconlabs">
+              <folder name="boards">
+                <folder name="all">
+                  <folder name="ports">
+                    <folder name="common_io">
+                      <folder name="iot_watchdog">
+                        <folder name="source">
+                          <file name="iot_watchdog_drv.c" uri="studio:/sdk/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/source/iot_watchdog_drv.c"/>
+                          <file name="iot_watchdog_hal.c" uri="studio:/sdk/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/source/iot_watchdog_hal.c"/>
+                        </folder>
+                        <folder name="include">
+                          <file name="iot_watchdog_desc.h" uri="studio:/sdk/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/include/iot_watchdog_desc.h"/>
+                          <file name="iot_watchdog_drv.h" uri="studio:/sdk/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/include/iot_watchdog_drv.h"/>
+                        </folder>
+                      </folder>
+                    </folder>
+                  </folder>
+                </folder>
+              </folder>
+            </folder>
+          </folder>
+          <folder name="libraries">
+            <folder name="abstractions">
+              <folder name="common_io">
+                <folder name="include">
+                  <file name="iot_watchdog.h" uri="studio:/sdk/util/third_party/aws_iot_libs/libraries/abstractions/common_io/include/iot_watchdog.h"/>
+                </folder>
+              </folder>
+            </folder>
+          </folder>
+        </folder>
       </folder>
     </folder>
   </folder>
@@ -442,6 +477,8 @@
   <includePath uri="studio:/sdk/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure"/>
   <includePath uri="studio:/sdk/platform/emdrv/gpiointerrupt/inc"/>
   <includePath uri="studio:/sdk/platform/service/iostream/inc"/>
+  <includePath uri="studio:/sdk/util/third_party/aws_iot_libs/libraries/abstractions/common_io/include"/>
+  <includePath uri="studio:/sdk/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/include"/>
   <includePath uri="studio:/sdk/platform/driver/leddrv/inc"/>
   <includePath uri="studio:/sdk/platform/peripheral/inc"/>
   <includePath uri="studio:/sdk/platform/common/toolchain/inc"/>

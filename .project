@@ -219,6 +219,11 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_version.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.3.2/platform/emlib/inc/em_wdog.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_wdog.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.3.2/platform/emlib/inc/sli_em_cmu.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/sli_em_cmu.h</locationURI>
@@ -282,6 +287,11 @@
 			<name>gecko_sdk_4.3.2/platform/emlib/src/em_usart.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_usart.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.2/platform/emlib/src/em_wdog.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_wdog.c</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.3.2/platform/peripheral/inc/peripheral_sysrtc.h</name>
@@ -1254,6 +1264,11 @@
 			<locationURI>STUDIO_SDK_LOC/util/third_party/freertos/kernel/portable/MemMang/heap_4.c</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.3.2/util/third_party/aws_iot_libs/libraries/abstractions/common_io/include/iot_watchdog.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/util/third_party/aws_iot_libs/libraries/abstractions/common_io/include/iot_watchdog.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.3.2/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</locationURI>
@@ -1272,6 +1287,26 @@
 			<name>gecko_sdk_4.3.2/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.2/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/include/iot_watchdog_desc.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/include/iot_watchdog_desc.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.2/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/include/iot_watchdog_drv.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/include/iot_watchdog_drv.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.2/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/source/iot_watchdog_drv.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/source/iot_watchdog_drv.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.2/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/source/iot_watchdog_hal.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/util/third_party/aws_iot_libs/vendors/siliconlabs/boards/all/ports/common_io/iot_watchdog/source/iot_watchdog_hal.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

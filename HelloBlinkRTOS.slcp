@@ -27,6 +27,8 @@ component:
 - {id: sl_system}
 - instance: [vcom]
   id: iostream_usart
+- instance: [wdog]
+  id: iot_watchdog
 - {id: MGM240PB32VNA}
 - {id: cmsis_dsp}
 - {id: freertos}

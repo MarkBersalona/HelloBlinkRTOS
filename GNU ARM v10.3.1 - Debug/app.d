@@ -96,7 +96,12 @@ app.o: ../app.c \
  /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/queue.h \
  /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/task.h \
  /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/queue.h \
- ../gconfig.h ../app.h
+ ../gconfig.h ../app.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_cmu.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_cmu_compat.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_gpio.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/sli_em_cmu.h \
+ /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_wdog.h
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/common/toolchain/inc/sl_gcc_preinclude.h:
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_chip.h:
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/Device/SiliconLabs/MGM24/Include/em_device.h:
@@ -196,3 +201,8 @@ app.o: ../app.c \
 /home/mark/SimplicityStudio/SDKs/gecko_sdk//util/third_party/freertos/kernel/include/queue.h:
 ../gconfig.h:
 ../app.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_cmu.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_cmu_compat.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_gpio.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/sli_em_cmu.h:
+/home/mark/SimplicityStudio/SDKs/gecko_sdk//platform/emlib/inc/em_wdog.h:
