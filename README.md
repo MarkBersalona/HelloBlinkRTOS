@@ -84,7 +84,7 @@ OutputTask: Received LED OFF message from Main
 OutputTask: Received LED ON message from Main
 OutputTask: Received LED OFF message from Main
 OutputTask: Received LED OFF message from Main
-MainTask: No messages{demo debug output}
+MainTask: No messages
 InputTask: No messages
 OutputTask: Received LED OFF message from Main
 MainTask: *** WARNING *** Waiting here in tight loop for watchdog reset...
